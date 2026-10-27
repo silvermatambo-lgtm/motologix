@@ -230,7 +230,7 @@ function initChat(){
 function initPWA(){
  let deferred=null;
  const install=$('#installAction'),dialog=$('#installHelp'),close=$('#installClose'),dialogInstall=$('#installFromDialog');
- const openHelp=()=>{if(dialog?.showModal)dialog.showModal();else alert('For installation, open the browser menu and choose Install App or Add to Home Screen.');};
+ const openHelp=()=>{if(dialog?.showModal){if(!dialog.open)dialog.showModal();}else alert('For installation, open the browser menu and choose Install App or Add to Home Screen.');};
  const act=async()=>{
   if(deferred){
    deferred.prompt();
