@@ -1,5 +1,5 @@
 /* MotoLogix Ultra Max 7: isolated first-party offline cache */
-const CACHE='motologix-ultramax7-home-v2-20261027';
+const CACHE='motologix-ultramax7-home-v3-20261027';
 const CORE=['/','/index.html','/v7.css','/v7.js','/homepage-v7.js','/homepage-v7.css','/manifest.webmanifest','/favicon.svg','/offline.html'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting()));
@@ -10,6 +10,17 @@ self.addEventListener('activate',event=>{
 self.addEventListener('fetch',event=>{
  const request=event.request;
  if(request.method!=='GET'||new URL(request.url).origin!==self.location.origin)return;
+ // Asset updates should be visible immediately after GitHub/Vercel redeployments.
+ const path=new URL(request.url).pathname;
+ if(/\.(?:js|css)$/.test(path)){
+  event.respondWith(fetch(request).then(response=>{
+   if(response.ok&&response.type==='basic'){
+    const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(request,copy)).catch(()=>{});
+   }
+   return response;
+  }).catch(()=>caches.match(request)));
+  return;
+ }
  if(request.mode==='navigate'){
   event.respondWith(fetch(request).then(response=>response).catch(async()=>{
    const cache=await caches.open(CACHE);
