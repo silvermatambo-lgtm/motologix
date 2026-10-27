@@ -105,3 +105,7 @@ body{padding-bottom:calc(79px + env(safe-area-inset-bottom))}
 /* Accessibility and state visibility safeguards */
 [hidden]{display:none!important}
 @media(max-width:700px){.navlinks{top:70px}.navlinks.open{display:flex}.pageHero h1{min-height:0}}
+
+/* Safe display: if the animation script cannot run, homepage content must remain visible. */
+html:not(.v7-ready) .reveal{opacity:1!important;transform:none!important;clip-path:none!important}
+@media (prefers-reduced-motion:reduce){html.v7-ready .reveal{opacity:1!important;transform:none!important;clip-path:none!important}}
