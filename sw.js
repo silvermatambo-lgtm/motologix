@@ -1,6 +1,6 @@
 /* MotoLogix Ultra Max 7: isolated first-party offline cache */
-const CACHE='motologix-ultramax7-v1-20261027';
-const CORE=['/','/index.html','/v7.css','/v7.js','/manifest.webmanifest','/favicon.svg','/offline.html'];
+const CACHE='motologix-ultramax7-home-v2-20261027';
+const CORE=['/','/index.html','/v7.css','/v7.js','/homepage-v7.js','/homepage-v7.css','/manifest.webmanifest','/favicon.svg','/offline.html'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting()));
 });
