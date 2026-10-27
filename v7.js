@@ -61,6 +61,8 @@ function render(path,scroll=true){
  else if(path!=='/'){html=pageHero('Not found',{heading:'Page not found',kicker:'MotoLogix',intro:'We could not find the page you requested.'})+
  '<section class="section"><div class="container"><a href="/" class="btn btn-green">Return home ↗</a></div></section>';}
  main.innerHTML=html;
+ // Homepage-only cross-links should not point from an inner page back to itself.
+ if(path!=='/')main.querySelectorAll('.homeSectionFooter').forEach(el=>el.remove());
  const routeLabel=routeNames[path]||'Not Found';
  document.title=(path==='/'?'MotoLogix | Advisory & Development | South Africa':routeLabel+' | MotoLogix Advisory & Development');
  const canonical=$('link[rel="canonical"]');if(canonical)canonical.href='https://www.motologix.co.za'+(path==='/'?'':path);
